@@ -1,11 +1,15 @@
 export default {
     name: 'official',
-    title: 'official', 
+    title: 'official',
     type: 'document',
-    fields: [
+    fields: [{
+            name: 'token',
+            title: 'token',
+            type: 'string',
+        },
         {
-            name: 'name',
-            title: 'Name',
+            name: 'derbyname',
+            title: 'Derby Name',
             type: 'string',
         },
         {
@@ -14,9 +18,49 @@ export default {
             type: 'string',
         },
         {
-            name: 'type',
-            title: 'Type',
-            type: 'official_type',
+            name: 'email',
+            title: 'Email',
+            type: 'string',
         },
-    ]
+        {
+            name: 'league',
+            title: 'League',
+            type: 'string',
+        },
+        {
+            name: 'contactnumber',
+            title: 'Contact Number',
+            type: 'string',
+        },
+        {
+            name: 'refumeurl',
+            title: 'Refume URL',
+            type: 'string',
+        },
+        {
+            name: 'city',
+            title: 'City',
+            type: 'string',
+        },
+        {
+            name: 'country',
+            title: 'Country',
+            type: 'string',
+        },
+        {
+            name: 'postcode',
+            title: 'PostCode',
+            type: 'string',
+        },
+        {
+            name: 'image',
+            title: 'Image',
+            type: 'image',
+        },
+    ],
+    preview: {
+        select: {
+            title: 'derbyname'
+        }
+    }
 }
