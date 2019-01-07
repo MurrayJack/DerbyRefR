@@ -1,4 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
+import { useState, useEffect } from 'react';
+
+import { QueryAPI } from "../../data/API";
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -37,6 +41,14 @@ const styles = {
 
 function UserProfile(props) {
   const { classes } = props;
+  const [user, setUser] = useState({ derbyname: "" });
+
+  useEffect(() => {
+    QueryAPI(`*[_type == "official" && token == $token]`, { token: 'Zbnmp8yrutqNdB453rJPJfecuNtRgq2n' }).then((result) => {
+      setUser(result[0]);
+    })
+  }, []);
+
   return (
     <div>
       <GridContainer>
@@ -56,11 +68,12 @@ function UserProfile(props) {
                     formControlProps={{
                       fullWidth: true,
                     }}
+                    inputProps={{ value: user.derbyname }}
                   />
 
                 </GridItem>
-                </GridContainer>
-                <GridContainer>
+              </GridContainer>
+              <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
                     labelText="Email address"
@@ -68,10 +81,11 @@ function UserProfile(props) {
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps={{ value: user.email }}
                   />
                 </GridItem>
               </GridContainer>
-              
+
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
@@ -82,11 +96,11 @@ function UserProfile(props) {
                     }}
                   />
                 </GridItem>
-                
+
               </GridContainer>
 
               <GridContainer>
-              <GridItem xs={12} sm={12} md={6}>
+                <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
                     labelText="Legal Name"
                     id="last-name"

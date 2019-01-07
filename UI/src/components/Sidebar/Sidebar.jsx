@@ -21,7 +21,7 @@ const Sidebar = ({ ...props }) => {
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
-  const { classes, color, logo, image, logoText, routes } = props;
+  const { classes, color, logo, image, logoText, routes, auth } = props;
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
@@ -53,8 +53,8 @@ const Sidebar = ({ ...props }) => {
                 {typeof prop.icon === "string" ? (
                   <Icon>{prop.icon}</Icon>
                 ) : (
-                  <prop.icon />
-                )}
+                    <prop.icon />
+                  )}
               </ListItemIcon>
               <ListItemText
                 primary={prop.sidebarName}
@@ -69,12 +69,12 @@ const Sidebar = ({ ...props }) => {
   );
   var brand = (
     <div className={classes.logo}>
-      <a href="https://www.creative-tim.com" className={classes.logoLink}>
+      <div className={classes.logoLink}>
         <div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.img} />
         </div>
         {logoText}
-      </a>
+      </div>
     </div>
   );
   return (
@@ -93,10 +93,14 @@ const Sidebar = ({ ...props }) => {
           }}
         >
           {brand}
+
           <div className={classes.sidebarWrapper}>
             <HeaderLinks />
-            {links}
+            {auth.isAuthenticated() && ({ links })}
+
+            {auth.isAuthenticated() && (<button>LogOut</button>)}
           </div>
+
           {image !== undefined ? (
             <div
               className={classes.background}
@@ -115,7 +119,12 @@ const Sidebar = ({ ...props }) => {
           }}
         >
           {brand}
-          <div className={classes.sidebarWrapper}>{links}</div>
+          <div className={classes.sidebarWrapper}>
+          {auth.isAuthenticated() && ({ links })}
+
+          {!auth.isAuthenticated() && (<button type="button" onClick={() => auth.renewSession()} >Login</button>)}
+
+          </div>
           {image !== undefined ? (
             <div
               className={classes.background}

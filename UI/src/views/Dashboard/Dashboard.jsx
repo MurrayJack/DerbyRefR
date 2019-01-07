@@ -38,12 +38,9 @@ import {
   completedTasksChart
 } from "variables/charts.jsx";
 
-import Auth from '../../Auth/Auth';
 
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 import MyGames from "./MyGames";
-import withAuth from "../../Auth/withAuth";
-
 
 class Dashboard extends React.Component {
   state = {
@@ -57,29 +54,14 @@ class Dashboard extends React.Component {
     this.setState({ value: index });
   };
 
-  componentWillMount() {
-    if (this.props.auth) {
-    const { renewSession } = this.props.auth;
-
-    if (localStorage.getItem('isLoggedIn') === 'true') {
-      renewSession();
-    }
-    }
-  }
-
   render() {
     const { classes } = this.props;
-    const { isAuthenticated, getAccessToken } = this.props.auth;
 
     return (
       <div>
         <GridContainer>
-          {isAuthenticated() && ( <MyGames /> )}
-          {!isAuthenticated() && ( <div>please login</div> )}
-
-
-          <div>{getAccessToken()}</div>
-
+          <MyGames />
+          
           {/* <GridItem xs={12} sm={6} md={3}>
             <Card>
               <CardHeader color="warning" stats icon>
@@ -307,4 +289,4 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withAuth(withStyles(dashboardStyle)(Dashboard));
+export default withStyles(dashboardStyle)(Dashboard);
